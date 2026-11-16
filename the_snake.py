@@ -57,17 +57,15 @@ class Apple(GameObject):
 
     def __init__(self, body_color=None, snake_positions=None):
         super().__init__(body_color)
-        self.randomize_position(snake_positions)
+        self.randomize_position(snake_positions or [])
 
     def randomize_position(self, positions):
         """Устанавливает случайное положение яблока на игровом поле."""
-        x_coordinate = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-        y_coordinate = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-        if positions is not None:
-            while (x_coordinate, y_coordinate) in positions:
-                x_coordinate = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-                y_coordinate = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-        self.position = (x_coordinate, y_coordinate)
+        while True:
+            self.position = (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                             randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
+            if self.position not in positions:
+                break
 
     def draw(self):
         """Отрисовывает яблоко на игровой поверхности."""
