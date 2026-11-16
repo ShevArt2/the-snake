@@ -55,7 +55,7 @@ class GameObject:
 class Apple(GameObject):
     """Класс описывающий яблоко, появляющееся в случайной клетке поля."""
 
-    def __init__(self, body_color=None, snake_positions=[]):
+    def __init__(self, body_color=None, snake_positions=None):
         super().__init__(body_color)
         self.randomize_position(snake_positions)
 
@@ -63,9 +63,10 @@ class Apple(GameObject):
         """Устанавливает случайное положение яблока на игровом поле."""
         x_coordinate = randint(0, GRID_WIDTH - 1) * GRID_SIZE
         y_coordinate = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-        while (x_coordinate, y_coordinate) in positions:
-            x_coordinate = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-            y_coordinate = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        if positions is not None:
+            while (x_coordinate, y_coordinate) in positions:
+                x_coordinate = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+                y_coordinate = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
         self.position = (x_coordinate, y_coordinate)
 
     def draw(self):
